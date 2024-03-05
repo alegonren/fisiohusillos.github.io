@@ -45,21 +45,23 @@
 <body>
     <div class="container">
         <h1>FISIO HUSILLOS</h1>
-        <form id="loginForm" method="post" action="opciones.html">
+        <form id="loginForm">
             <label for="password">Contraseña:</label><br>
             <input type="password" id="password" name="password" required><br><br>
-            <input type="submit" value="Acceder">
+            <input type="button" value="Acceder" onclick="submitForm()">
         </form>
     </div>
 
     <script>
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
+        function submitForm() {
             var passwordInput = document.getElementById("password").value;
-            if (passwordInput !== "2024") {
+            if (passwordInput === "2024") {
+                // Redirige a la página deseada cuando la contraseña es correcta
+                window.location.href = "opciones.html";
+            } else {
                 alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
-                event.preventDefault(); // Evita que el formulario se envíe
             }
-        });
+        }
     </script>
 </body>
 </html>
