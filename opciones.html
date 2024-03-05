@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FISIO HUSILLOS</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css" crossorigin="anonymous">
+    <link rel="icon" type="image/svg+xml" href="C:\Users\alepe\OneDrive\Escritorio\FISIO_HUSI\rayo_icono.svg">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #183153; /* Fondo oscuro */
+            margin: 20px;
+	    margin-top: 150px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50vh; /* Changed height to min-height for small content */
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            flex-wrap: wrap; /* Added for responsiveness */
+        }
+        .box {
+            text-align: center;
+            background-color: #D6C5C5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            width: 30%;
+            margin-bottom: 20px; /* Added space between boxes */
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .box a {
+            display: block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #183153;
+            color: #D6C5C5;
+            width: 100%; /* Added */
+            position: fixed; /* Added */
+            bottom: 0; /* Added */
+            left: 0; /* Added */
+        }
+        footer a {
+            color: #183153;
+            text-decoration: none;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>KUARENTOCISTAS</h2>
+            <form id="loginForm1" method="post" action="husi.html">
+                <label for="password">Contraseña:</label><br>
+                <input type="password" id="password1" name="password" required><br><br>
+                <input type="submit" value="Acceder">
+            </form>
+        </div>
+        <div class="box">
+            <h2>KUARENTADORES</h2>
+            <form id="loginForm2" method="post" action="kuarentadores.html">
+                <label for="password">Contraseña:</label><br>
+                <input type="password" id="password2" name="password" required><br><br>
+                <input type="submit" value="Acceder">
+            </form>
+        </div>
+	<div class="box">
+            <h2>ENCODER</h2>
+            <a href="encoder.html">Acceder</a>
+        </div>
+    </div>
+
+    <footer>
+        <b>SERGIO HUSILLOS DOMINGO</b><br>
+	Fisioterapeuta &nbsp;
+	Col. 3977 <br>
+	<i class="fab fa-instagram"></i> @s.husillos97 <i class="fab fa-instagram"></i>
+	
+    </footer>
+
+    <script>
+        // Script para validar contraseñas
+        document.getElementById("loginForm1").addEventListener("submit", function(event) {
+            var passwordInput = document.getElementById("password1").value;
+            if (passwordInput !== "2024") {
+                alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
+                event.preventDefault(); // Evita que el formulario se envíe
+            }
+        });
+
+        document.getElementById("loginForm2").addEventListener("submit", function(event) {
+            var passwordInput = document.getElementById("password2").value;
+            if (passwordInput !== "2024") {
+                alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
+                event.preventDefault(); // Evita que el formulario se envíe
+            }
+        });
+    </script>
+</body>
+</html>

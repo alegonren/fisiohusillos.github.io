@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENCODER</title>
+<link rel="icon" type="image/svg+xml" href="C:\Users\alepe\OneDrive\Escritorio\FISIO_HUSI\pesa_icono.svg">
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        //background-color: aliceBlue;
+	//background-color: #183153;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        color: black;
+    }
+    #container {
+        text-align: center;
+    }
+    #selectorContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #selectorContainer select {
+        margin: 5px;
+    }
+    .hidden {
+        display: none;
+    }
+    /* Estilo para el enlace de descarga */
+    #descargarLink,
+    #mostrarResultados {
+        display: none; /* Inicialmente oculto */
+        margin-top: 20px;
+        margin-right: 20px; /* Agregamos margen derecho */
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    #descargarLink:hover,
+    #mostrarResultados:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <h2>CALCULADORA DE PORCENTAJES A PARTIR DEL ENCODER</h2>
+    <label for="ubicacion">Selecciona un ejercicio:</label><br>
+    <select id="ejercicio">
+        <option value="Cargada">Cargada</option>
+        <option value="Sentadilla">Sentadilla</option>
+        <option value="Semi-sentadilla">Semi-sentadilla</option>
+        <option value="Hip-Trust">Hip-Trust</option>
+        <option value="Peso muerto">Peso muerto</option>
+        <option value="Press de banca">Press de banca</option>
+        <option value="Salto pies juntos vertical">Salto pies juntos vertical</option>
+        <option value="Salto pies juntos sentado">Salto pies juntos sentado</option>
+    </select>
+    <br><br>
+    <label for="valor">Introduce un valor numérico:</label><br>
+    <input type="number" id="valor" name="valor"><br><br>
+    <button onclick="calcularPorcentajes()">Calcular</button>
+    <button onclick="añadirNuevoRegistro()" id="añadirRegistro" style="display:none;">Añadir Nuevo Registro</button><br><br>
+    <div id="resultados"></div><br><br>
+    <!-- Enlace de descarga normal -->
+    <a id="descargarLink" href="#" onclick="añadirNuevoRegistro()">Descargar resultado</a>
+    <!-- Botón para mostrar los resultados -->
+    <button id="mostrarResultados" onclick="mostrarResultados()">Mostrar resultados</button>
+</div>
+
+<script>
+    var registros = ""; // Almacena los registros anteriores
+
+    function calcularPorcentajes() {
+        var ejercicio = document.getElementById("ejercicio").value;
+        var valor = document.getElementById("valor").value;
+        var resultado = "Ejercicio seleccionado: " + ejercicio + "\n\n";
+        resultado += "El 50% de tu RM son: " + ( (valor * 0.5).toFixed(2) ) +"kg"+ "\n";
+        resultado += "El 60% de tu RM son: " + ( (valor * 0.6).toFixed(2) ) +"kg"+ "\n";
+        resultado += "El 70% de tu RM son: " + ( (valor * 0.7).toFixed(2) ) +"kg"+ "\n";
+        resultado += "El 80% de tu RM son: " + ( (valor * 0.8).toFixed(2) ) +"kg"+ "\n";
+        resultado += "El 90% de tu RM son: " + ( (valor * 0.9).toFixed(2) ) +"kg"+ "\n\n";
+        resultado += "Tu RM son: " + (valor) +"kg"+ "\n";
+        document.getElementById("resultados").innerText = resultado;
+        registros += resultado; // Agregar los nuevos resultados como registros
+        registros += "\n\n"; // Agregar dos saltos de página
+        limpiar();
+        var button = document.getElementById("añadirRegistro");
+        //button.style.display = 'block'; // Mostrar el botón de añadir registro
+
+        // Mostrar el enlace de descarga
+        var link = document.getElementById('descargarLink');
+        link.style.display = 'inline-block';
+        // Mostrar el botón de mostrar resultados
+        var mostrarButton = document.getElementById('mostrarResultados');
+        mostrarButton.style.display = 'inline-block';
+    }
+
+    function limpiar() {
+        document.getElementById("ejercicio").selectedIndex = 0; // Establecer el desplegable al primer ítem
+        document.getElementById("valor").value = ""; // Limpiar el valor del campo de entrada
+    }
+    function añadirNuevoRegistro() {
+        var currentDate = new Date();
+        var formattedDate = currentDate.toLocaleDateString('es-ES'); // Obtiene la fecha actual formateada
+        var fileContent = "Fecha: " + formattedDate + "\n\n" + registros; // Agrega la fecha al principio del contenido
+        var nombre = localStorage.getItem("nombre"); // Obtener el nombre del almacenamiento local
+        var fileContent = "Nombre: " + nombre + "\n\n" + registros; // Agregar el nombre al principio del contenido
+
+        var fileContent = nombre + " · " + formattedDate + "\n\n" + registros;
+        
+        var file = new Blob([fileContent], {type: 'text/plain'});
+        
+        // Crear el enlace de descarga
+        var a = document.createElement("a");
+        var url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = "resultados.txt";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function()
+        {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0);
+    }
+
+    function mostrarResultados(nombre)
+    {
+        var ventanaNueva = window.open('', '_blank');
+        var today = new Date();
+        var dateString = today.toLocaleDateString();
+        var nombre = localStorage.getItem("nombre"); // Obtener el nombre del almacenamiento local
+        ventanaNueva.document.write('<html><head><style>body { font-family: Arial, sans-serif; background-color: #F0F8FF; }</style></head><body>');
+        ventanaNueva.document.write("<strong>" + nombre + "</strong> · " + dateString + "<br><br>");
+        var lineas = registros.split("\n");
+        for (var i = 0; i < lineas.length; i++)
+        {
+            ventanaNueva.document.write(lineas[i] + "<br>");
+        }
+        ventanaNueva.document.write('<p style="color: red; opacity: 0.7;"><em>Hacer captura de pantalla para guardar los resultados.</em></p>');
+        ventanaNueva.document.write('</body></html>');
+    }
+
+
+</script>
+
+</body>
+</html>
